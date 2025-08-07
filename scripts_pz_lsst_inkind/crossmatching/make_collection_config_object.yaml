@@ -1,0 +1,93 @@
+# Base directory where processNNN/output and logs will be created
+base_path: /scratch/users/andreia.dourado/pz-lsst-inkind/doc/make_hats_notebooks/
+
+input_catalog:
+  # Path to the directory containing the catalog files
+  path: /scratch/users/andreia.dourado/dados_tcc/training_sets/
+
+  # File name pattern to match catalog files
+  files: 'training_set.parquet'
+
+  # Columns to read from the input files
+  # Use YAML block style (with dashes) or inline style ([col1, col2, col3])
+  # Set to null or remove this field to read all columns automatically
+  selected_columns:
+      - coord_ra
+      - coord_dec
+      - u_cModelFlux
+      - g_cModelFlux
+      - r_cModelFlux
+      - i_cModelFlux
+      - z_cModelFlux
+      - y_cModelFlux
+      - u_cModelFluxErr
+      - g_cModelFluxErr
+      - r_cModelFluxErr
+      - i_cModelFluxErr
+      - z_cModelFluxErr
+      - y_cModelFluxErr
+      - detect_isPrimary
+      - refExtendedness
+      - tract
+      - patch
+      - deblend_skipped
+      - i_cModel_flag
+      - detect_isIsolated
+      - i_blendedness
+      - i_pixelFlags_edge
+      - i_pixelFlags_clippedCenter
+      - i_pixelFlags_crCenter
+      - i_pixelFlags_interpolatedCenter
+      - i_pixelFlags_offimage
+      - i_pixelFlags_saturatedCenter
+      - i_pixelFlags_sensor_edgeCenter
+      - i_pixelFlags_suspectCenter
+      - i_pixelFlags_bad
+      - i_pixelFlags_clipped
+      - i_pixelFlags_cr
+      - i_pixelFlags_interpolated
+      - i_pixelFlags_saturated
+      - i_pixelFlags_suspect
+      - i_centroid_flag
+  # selected_columns: null  # or remove this line to read all columns
+
+  # RA and DEC column names
+  ra_column: coord_ra
+  dec_column: coord_dec
+
+  # Name of the output HATS folder (inside processNNN/output)
+  hats_folder_name: dp02_objetc_match_hats
+
+  # File format of the input catalog
+  # Supported values: "parquet", "csv", "fits"
+  # Use lowercase only
+  file_type: parquet
+
+  # Optional: define a margin cache threshold (in arcsec)
+  margin_threshold: 1.0
+
+cluster:
+  # Dask/SLURM configuration
+  interface: ib0
+  queue: cpu
+  cores: 50
+  processes: 1
+  memory: 120GB
+  walltime: '01:00:00'
+  account: hpc-bpglsst
+  scale_jobs: 25
+
+  # Whether to save stdout/stderr of Dask jobs into logs/dask_logs
+  save_dask_logs: true
+
+  # Whether to apply the extra_dask_config settings below
+  # Set to true to use memory safety settings in Dask workers
+  extra_configs: false  # change to true to apply extra_dask_config
+
+extra_dask_config:
+  # These settings are applied only if extra_configs is set to true
+  distributed.worker.memory.target: 0.75
+  distributed.worker.memory.spill: 0.85
+  distributed.worker.memory.pause: 0.92
+  distributed.worker.memory.terminate: 0.98
+  distributed.worker.memory.recent-to-old: 0.2

@@ -1,0 +1,32 @@
+base_path: /scratch/users/<your-user>/pz-lsst-inkind/doc/make_hats_notebooks/
+
+left_catalog:
+  # Name for saving. You can choose one.
+  name: dp02_object 
+  hats_dir: /scratch/users/andreia.dourado/pz-lsst-inkind/doc/make_hats_notebooks/make_collection_object/output/dp02_object/dp02_object
+
+right_catalog:
+  # Name for saving. You can choose one.
+  name: dp02_truth
+  hats_dir: /scratch/users/andreia.dourado/pz-lsst-inkind/doc/make_hats_notebooks/make_collection_truth_match/output/dp02_truth/dp02_truth
+  margin_cache_dir: /scratch/users/andreia.dourado/pz-lsst-inkind/doc/make_hats_notebooks/make_collection_truth_match/output/dp02_truth/dp02_truth_1arcs
+
+crossmatch_radius_arcsec: 1.0
+n_neighbors: 1
+
+cluster:
+  interface: ib0
+  queue: cpu_small
+  cores: 50
+  processes: 1
+  memory: 120GB
+  walltime: "02:30:00"
+  scale_jobs: 20
+  save_dask_logs: true
+  extra_configs: false
+
+extra_dask_config:
+  distributed.worker.memory.target: 0.75
+  distributed.worker.memory.spill: 0.85
+  distributed.worker.memory.pause: 0.95
+  distributed.worker.memory.terminate: 0.98
