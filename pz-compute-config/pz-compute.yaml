@@ -1,0 +1,4 @@
+algorithm: tpz
+calib_file: estimator_tpz.pkl
+param_file: tpz.yaml
+sbatch_args: "-N9 -n90 -c10 -w apl18,apl[20-27]" 
